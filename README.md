@@ -73,9 +73,24 @@ private:
 # stack@0.0.3
 
 - Пометить все методы одной из трех меток:
-  - `basic`
-  - `strong`
-  - `noexcept`
+  - `/*basic*/`
+  - `/*strong*/`
+  - `/*noexcept*/`
+```
+template <typename T>
+class stack
+{
+public:
+  stack();
+  size_t count() /*noexcept*/ const;
+  void push(T const &) /*basic*/;
+  T pop() /*strong*/;
+private:
+  T * array_;
+  size_t array_size_;
+  size_t count_;
+};
+```
 - Сделать класс `stack` безопасным относительно исключений (обеспечивающим строгую гарантию), заменив метод `pop` на два соответствующих `pop` и `top`.
 - Добавить метод empty().
 
