@@ -76,6 +76,8 @@ private:
   - `/*basic*/`
   - `/*strong*/`
   - `/*noexcept*/`
+  
+  Пример:
 ```
 template <typename T>
 class stack
@@ -86,7 +88,7 @@ public:
   void push(T const &) /*basic*/;
   T pop() /*strong*/;
 private:
-  swap( stack & )
+  swap( stack & ) /*???*/;
   T * array_;
   size_t array_size_;
   size_t count_;
@@ -108,6 +110,7 @@ public:
   void pop() /*noexcept || strong*/;
   T top() /*noexcept || strong*/
 private:
+  swap( stack & ) /*noexcept || strong*/
   T * array_;
   size_t array_size_;
   size_t count_;
