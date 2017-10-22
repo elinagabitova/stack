@@ -81,19 +81,38 @@ template <typename T>
 class stack
 {
 public:
-  stack();
-  size_t count() /*noexcept*/ const;
+  stack(); /*strong*/
+  size_t count() const /*noexcept*/;
   void push(T const &) /*basic*/;
   T pop() /*strong*/;
+private:
+  swap( stack & )
+  T * array_;
+  size_t array_size_;
+  size_t count_;
+};
+```
+- Добавить метод empty().
+
+# stack@0.0.4
+
+- Сделать класс `stack` безопасным относительно исключений (обеспечивающим строгую гарантию), заменив метод `pop` на два соответствующих `pop` и `top`.
+```
+template <typename T>
+class stack
+{
+public:
+  stack(); /*noexcept || strong*/
+  size_t count() const /*noexcept || strong*/;
+  void push(T const &) /*noexcept || strong*/;
+  void pop() /*noexcept || strong*/;
+  T top() /*noexcept || strong*/
 private:
   T * array_;
   size_t array_size_;
   size_t count_;
 };
 ```
-- Сделать класс `stack` безопасным относительно исключений (обеспечивающим строгую гарантию), заменив метод `pop` на два соответствующих `pop` и `top`.
-- Добавить метод empty().
-
 
 
 
