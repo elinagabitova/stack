@@ -154,7 +154,7 @@ public:
   size_t count() const;
   void push(T const &);
   auto try_pop() -> std::shared_ptr<T>;
-  auto wait_and_pop() -> std::shared_ptr<T>
+  auto wait_and_pop() -> std::shared_ptr<T>;
 private:
   T * ptr_;
   size_t size_;
