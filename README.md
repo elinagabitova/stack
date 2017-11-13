@@ -144,9 +144,9 @@ private:
 
 # stack@0.0.6
 
-- Сделать класс `stack` 
-  - более потокодружелюбным (устранив простои) // `std::condition_variable`
-  - более дружелюбным относительно исключений (убрав генерацию исключения) `// pop -> try_pop wait_and_pop`
+- Сделать класс `stack` более
+  - потокодружелюбным (устранив простои) `// std::condition_variable`
+  - дружелюбным относительно исключений (убрав генерацию исключения) `// pop -> try_pop + wait_and_pop`
 ```
 template <typename T>
 class stack /*thread-safe*/
