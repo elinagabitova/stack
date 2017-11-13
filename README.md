@@ -14,8 +14,8 @@ public:
   void push(T const &);
   T pop();
 private:
-  T * array_;
-  size_t array_size_;
+  T * ptr_;
+  size_t size_;
   size_t count_;
 };
 ```
@@ -88,10 +88,10 @@ public:
   size_t count() const /*noexcept*/;
   void push(T const &) /*basic*/;
   T pop() /*unsafe*/;
+  swap( stack & ) /*strong*/;
 private:
-  swap( stack & ) /**/;
-  T * array_;
-  size_t array_size_;
+  T * ptr_;
+  size_t size_;
   size_t count_;
 };
 ```
@@ -110,10 +110,10 @@ public:
   void push(T const &) /*noexcept || strong*/;
   void pop() /*noexcept || strong*/;
   T top() /*noexcept || strong*/
-private:
   swap( stack & ) /*noexcept || strong*/
-  T * array_;
-  size_t array_size_;
+private:
+  T * ptr_;
+  size_t size_;
   size_t count_;
 };
 ```
@@ -132,12 +132,34 @@ public:
   size_t count() const;
   void push(T const &);
   auto pop() -> std::shared_ptr<T>;
+  swap( stack & other );
 private:
-  swap( stack & other )
-  T * array_;
-  size_t array_size_;
+  T * ptr_;
+  size_t size_;
   size_t count_;
+  std::mutex mutex_;
 };
 ```
 
 
+# stack@0.0.6
+
+- Сделать класс `stack` более потокодружелюбным (устранив простои) и более дружелюбным относительно исключений, воспользовавшись `std::condition_variable`:
+```
+template <typename T>
+class stack /*thread-safe*/
+{
+public:
+  stack();
+  size_t count() const;
+  void push(T const &);
+  auto try_pop() -> std::shared_ptr<T>;
+  auto wait_and_pop() -> std::shared_ptr<T>
+private:
+  T * ptr_;
+  size_t size_;
+  size_t count_;
+  std::mutex mutex_;
+  std::condition_variable cond_;
+};
+```
